@@ -1,0 +1,14 @@
+:root {
+    --red: hsla(350, 91%, 45%, 1);
+    --red-hover: hsla(350, 91%, 65%, 1);
+    --red-shadow: hsla(350, 91%, 35%, 1);
+    --gray-100: hsla(0, 0%, 87%, 1);
+    --gray-300: hsla(11, 16%, 57%, 1);
+    --gray-600: hsla(11, 21%, 44%, 1);
+    --gray-900: hsla(11, 41%, 22%, 1);
+    --light-1: hsla(0, 0, 87%, 1);
+    --light-2: hsla(130, 18%, 80%, 1);
+    --dark-1: hsla(0, 51%, 31%, 1);
+    --pokedex-width: 428px;
+    --pokedex-height: 926px;
+}
