@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { VarKeyMap } from "./styles/VarKeyMap";
+import { VarKeyMap } from "./data/VarKeyMap";
 import SvgTopCircle from "./assets/components/TopCircle";
 import SvgTopSeparator from "./assets/components/TopSeparator";
 import SvgDpad from "./assets/components/Dpad";
-import { useEffect } from "react";
+import TypeIndicators from "./fragments/TypeIndicators/TypeIndicators";
+import MainScreen from "./fragments/MainScreen/MainScreen";
 
 const Section = styled.section`
     width: 100%;
@@ -61,17 +62,6 @@ const TopSeparatorContainer = styled.div`
     height: 110px;
 `;
 
-const MainScreen = styled.div`
-    --h: 456px;
-    grid-column: 1/7;
-    height: var(--h);
-    margin: 0 0.5rem;
-    border: 0.5rem solid var(${VarKeyMap.Gray900});
-    border-radius: 8px;
-    background-color: var(${VarKeyMap.Gray100});
-    box-shadow: inset 0px -4px 2px rgba(132, 8, 8, 0.5);
-`;
-
 const Knob = styled.button`
     --w: 50px;
     width: var(--w);
@@ -82,23 +72,6 @@ const Knob = styled.button`
     background-color: var(${VarKeyMap.Gray900});
     box-shadow: 0px 4px 4px rgba(169, 13, 13, 0.75);
     grid-column: 1/3;
-`;
-
-const TypeIndicatorContainer = styled.div`
-    grid-column: span 4 / span 4;
-    display: flex;
-    align-self: center;
-`;
-
-const TypeIndicator = styled.div`
-    background-color: var(${VarKeyMap.Light2});
-    border: 4px solid var(${VarKeyMap.RedShadow});
-    width: 40%;
-    font-size: 1.2rem;
-    padding: 0.1rem 0.3rem;
-    height: 1.5em;
-    margin: 0 0.1rem;
-    border-radius: 8px;
 `;
 
 const InfoTextArea = styled.div`
@@ -131,12 +104,6 @@ const DPadContainer = styled.div`
 `;
 
 function App() {
-    useEffect(() => {
-        speechSynthesis.getVoices().forEach(function (voice) {
-            console.log(voice.name, voice.default ? voice.default : "");
-        });
-    }, []);
-
     return (
         <Section>
             <Frame>
@@ -151,12 +118,12 @@ function App() {
                 <TopSeparatorContainer>
                     <SvgTopSeparator width={"100%"} height={"100%"} />
                 </TopSeparatorContainer>
-                <MainScreen></MainScreen>
+                <MainScreen
+                    name="Ditto"
+                    frontSprite="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+                />
                 <Knob />
-                <TypeIndicatorContainer>
-                    <TypeIndicator>Fire</TypeIndicator>
-                    <TypeIndicator>Fighting</TypeIndicator>
-                </TypeIndicatorContainer>
+                <TypeIndicators type1="Fire" type2="Fighting" />
                 <InfoTextArea>
                     There is a plant seed on its back right from the day this
                     Pokémon is born. The seed slowly grows larger.
