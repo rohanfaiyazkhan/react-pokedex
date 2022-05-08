@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import styled from "styled-components";
 import { VarKeyMap } from "../../data/VarKeyMap";
+import SvgSwitchIcon from "../../assets/components/SwitchIcon";
 
 const MainScreenDisplay = styled.div`
     --h: 456px;
@@ -42,14 +44,49 @@ const MainScreenDisplay = styled.div`
         border-radius: 1px;
         border: 4px solid var(${VarKeyMap.Gray600});
         box-shadow: 0 0 0 4px var(${VarKeyMap.Dark1});
+        text-transform: capitalize;
+    }
+
+    .spriteToggle {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        border: 4px solid var(${VarKeyMap.Gray600});
+        box-shadow: 2px 2px 0 2px var(${VarKeyMap.Gray300});
+        cursor: pointer;
     }
 `;
 
-function MainScreen({ frontSprite, name }) {
+function MainScreen({ frontSprite, backSprite, name, id }) {
+    const [spriteToShow, setSpriteToShow] = useState("front");
+
+    const toggleSpriteToShow = () => {
+        setSpriteToShow((val) => (val === "front" ? "back" : "front"));
+    };
+
     return (
         <MainScreenDisplay>
-            <p className="name">{name}</p>
-            <img src={frontSprite} alt={`front-sprite-${name}`} />
+            <p className="name">
+                {id}. {name}
+            </p>
+            <img
+                src={spriteToShow === "front" ? frontSprite : backSprite}
+                alt={`front-sprite-${name}`}
+            />
+            <button
+                className="spriteToggle"
+                title="Toggle which side the pokemon is facing"
+                onClick={toggleSpriteToShow}
+            >
+                <SvgSwitchIcon
+                    alt="Icon by Zulfahmi Al Ridhawi in Noun Project"
+                    width="100%"
+                    height="100%"
+                />
+            </button>
         </MainScreenDisplay>
     );
 }
@@ -58,6 +95,7 @@ MainScreen.propTypes = {
     frontSprite: PropTypes.string.isRequired,
     backSprite: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 };
 
 export default MainScreen;
