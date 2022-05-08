@@ -1,4 +1,4 @@
-const ditto = {
+export const ditto = {
     abilities: [
         {
             ability: {

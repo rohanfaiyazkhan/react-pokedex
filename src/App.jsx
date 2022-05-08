@@ -26,8 +26,8 @@ const Frame = styled.main`
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     grid-auto-rows: min-content;
-    border-radius: 8px;
-    border: 8px solid var(${VarKeyMap.RedShadow});
+    border: 4px solid var(${VarKeyMap.RedShadow});
+    box-shadow: 0 0 0 4px var(${VarKeyMap.Gray800});
 `;
 
 const TopCircleContainer = styled.div`

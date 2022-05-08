@@ -11,10 +11,9 @@ const InfoBox = styled.div`
     background-color: var(${VarKeyMap.Light2});
     border: 4px solid var(${VarKeyMap.RedShadow});
     box-shadow: inset 0px -4px 2px rgba(132, 8, 8, 0.5);
-    margin: 1rem 1.5rem 0.5rem 0;
+    margin: 1rem 1rem 0.5rem 0;
     padding: 0.25rem 0.75rem;
-
-    height: 4em;
+    height: 6em;
     grid-column: span 4 / span 4;
     overflow-y: auto;
     scrollbar-color: var(--scroll-thumb) var(--scroll-track);
@@ -31,17 +30,17 @@ const InfoBox = styled.div`
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        column-gap: 0.5rem;
+        column-gap: 0.75rem;
         margin: 0;
         padding: 0;
     }
 
     li {
         list-style: none;
-        margin: 0.1rem 0;
+        margin: 0.25rem 0;
         display: flex;
         justify-content: space-between;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 `;
 
