@@ -5,6 +5,7 @@ import SvgTopSeparator from "./assets/components/TopSeparator";
 import SvgDpad from "./assets/components/Dpad";
 import TypeIndicators from "./fragments/TypeIndicators/TypeIndicators";
 import MainScreen from "./fragments/MainScreen/MainScreen";
+import Loading from "./fragments/Loading/Loading";
 
 const Section = styled.section`
     width: 100%;
@@ -33,29 +34,6 @@ const TopCircleContainer = styled.div`
     align-self: start;
 `;
 
-const LoadingIndicators = styled.div`
-    grid-column: 2/6;
-    margin: 1.5em 0.5em;
-    align-self: start;
-    justify-self: center;
-    display: flex;
-
-    .loading-circle {
-        display: block;
-        content: " ";
-        margin-right: 0.5rem;
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 50%;
-        border: 6px solid var(${VarKeyMap.Gray900});
-        background-color: var(${VarKeyMap.Gray900});
-
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-`;
-
 const TopSeparatorContainer = styled.div`
     grid-column: 1/7;
     align-self: start;
@@ -78,6 +56,7 @@ const InfoTextArea = styled.div`
     --scroll-track: var(${VarKeyMap.Gray900});
     --scroll-thumb: var(${VarKeyMap.RedHover});
 
+    font-family: "Pokemon";
     background-color: var(${VarKeyMap.Light2});
     border: 4px solid var(${VarKeyMap.RedShadow});
     box-shadow: inset 0px -4px 2px rgba(132, 8, 8, 0.5);
@@ -110,11 +89,7 @@ function App() {
                 <TopCircleContainer>
                     <SvgTopCircle width={"100%"} height={"100%"} />
                 </TopCircleContainer>
-                <LoadingIndicators>
-                    <div className="loading-circle"></div>
-                    <div className="loading-circle"></div>
-                    <div className="loading-circle"></div>
-                </LoadingIndicators>
+                <Loading />
                 <TopSeparatorContainer>
                     <SvgTopSeparator width={"100%"} height={"100%"} />
                 </TopSeparatorContainer>
