@@ -13,6 +13,18 @@ const MainScreenDisplay = styled.div`
     background-color: var(${VarKeyMap.Gray100});
     box-shadow: inset 0px -4px 2px rgba(132, 8, 8, 0.5);
 
+    &:before {
+        content: " ";
+        z-index: 0;
+        position: absolute;
+        top: -0.5rem;
+        left: -0.5rem;
+        border: 4px solid var(${VarKeyMap.RedShadow});
+        width: calc(100% + 0.65rem);
+        height: calc(100% + 0.65rem);
+        border-radius: 8px;
+    }
+
     img {
         position: absolute;
         width: 100%;
@@ -24,10 +36,12 @@ const MainScreenDisplay = styled.div`
     .name {
         font-family: "Pokemon";
         position: absolute;
-        left: 0;
+        left: 8px;
         top: 0;
         padding: 4px 8px;
-        border: 4px solid var(${VarKeyMap.Dark1});
+        border-radius: 1px;
+        border: 4px solid var(${VarKeyMap.Gray600});
+        box-shadow: 0 0 0 4px var(${VarKeyMap.Dark1});
     }
 `;
 
