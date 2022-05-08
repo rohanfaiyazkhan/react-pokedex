@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { VarKeyMap } from "./data/VarKeyMap";
 import SvgTopCircle from "./assets/components/TopCircle";
 import SvgTopSeparator from "./assets/components/TopSeparator";
-import SvgDpad from "./assets/components/Dpad";
 import TypeIndicators from "./fragments/TypeIndicators/TypeIndicators";
 import MainScreen from "./fragments/MainScreen/MainScreen";
 import Loading from "./fragments/Loading/Loading";
 import { ditto as pokemon } from "./data/samplePokemon";
+import DpadController from "./fragments/InfoTextArea/DpadController";
+import SpeechButton from "./fragments/SpeechButton/SpeechButton";
 
 const Section = styled.section`
     width: 100%;
@@ -41,48 +42,6 @@ const TopSeparatorContainer = styled.div`
     height: 110px;
 `;
 
-const Knob = styled.button`
-    --w: 50px;
-    width: var(--w);
-    height: var(--w);
-    border-radius: 50%;
-    margin: 1.5rem 1rem 0.5rem 1.5rem;
-    border: 4px solid var(${VarKeyMap.Gray900});
-    background-color: var(${VarKeyMap.Gray900});
-    box-shadow: 0px 4px 4px rgba(169, 13, 13, 0.75);
-    grid-column: 1/3;
-`;
-
-const InfoTextArea = styled.div`
-    --scroll-track: var(${VarKeyMap.Gray900});
-    --scroll-thumb: var(${VarKeyMap.RedHover});
-
-    font-family: "Pokemon";
-    background-color: var(${VarKeyMap.Light2});
-    border: 4px solid var(${VarKeyMap.RedShadow});
-    box-shadow: inset 0px -4px 2px rgba(132, 8, 8, 0.5);
-    margin: 1rem 0.5rem 0.5rem 1.5rem;
-    padding: 0.5rem 0.75rem;
-    font-size: 1.1rem;
-    height: 4em;
-    grid-column: span 4 / span 4;
-    overflow-y: auto;
-    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-
-    &::-webkit-scrollbar-thumb {
-        background: var(--scroll-thumb);
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--scroll-track);
-    }
-`;
-
-const DPadContainer = styled.div`
-    grid-column: span 2 / span 2;
-    margin: 1rem 1.5rem 0.5rem 1.5rem;
-`;
-
 function App() {
     return (
         <Section>
@@ -100,15 +59,9 @@ function App() {
                     frontSprite={pokemon.sprites.front_default}
                     backSprite={pokemon.sprites.back_default}
                 />
-                <Knob />
+                <SpeechButton />
                 <TypeIndicators types={pokemon.types} />
-                <InfoTextArea>
-                    There is a plant seed on its back right from the day this
-                    Pokémon is born. The seed slowly grows larger.
-                </InfoTextArea>
-                <DPadContainer>
-                    <SvgDpad />
-                </DPadContainer>
+                <DpadController stats={pokemon.stats} />
             </Frame>
         </Section>
     );
