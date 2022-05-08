@@ -8,6 +8,7 @@ export const VarKeyMap = Object.freeze({
     Gray100: "--gray-100",
     Gray300: "--gray-300",
     Gray600: "--gray-600",
+    Gray800: "--gray-800",
     Gray900: "--gray-900",
     PokedexWidth: "--pokedex-width",
     PokedexHeight: "--pokedex-height",
