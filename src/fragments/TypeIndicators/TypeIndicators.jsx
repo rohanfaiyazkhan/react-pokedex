@@ -15,24 +15,26 @@ const TypeIndicator = styled.div`
     font-family: "Pokemon";
     width: 35%;
     font-size: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0;
+    text-transform: capitalize;
     height: 1.5em;
     margin: 0 0.25rem;
     border-radius: 8px;
 `;
 
-function TypeIndicators({ type1, type2 }) {
+function TypeIndicators({ types }) {
     return (
         <TypeIndicatorContainer>
-            <TypeIndicator>{type1}</TypeIndicator>
-            <TypeIndicator>{type2}</TypeIndicator>
+            <TypeIndicator>{types[0].type.name}</TypeIndicator>
+            {types.length > 1 && types[1]?.type?.name && (
+                <TypeIndicator>{types[1].type.name}</TypeIndicator>
+            )}
         </TypeIndicatorContainer>
     );
 }
 
 TypeIndicators.propTypes = {
-    type1: PropTypes.string.isRequired,
-    type2: PropTypes.string,
+    types: PropTypes.array.isRequired,
 };
 
 export default TypeIndicators;

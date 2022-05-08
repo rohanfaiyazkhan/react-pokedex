@@ -6,6 +6,7 @@ import SvgDpad from "./assets/components/Dpad";
 import TypeIndicators from "./fragments/TypeIndicators/TypeIndicators";
 import MainScreen from "./fragments/MainScreen/MainScreen";
 import Loading from "./fragments/Loading/Loading";
+import { ditto as pokemon } from "./data/samplePokemon";
 
 const Section = styled.section`
     width: 100%;
@@ -94,11 +95,13 @@ function App() {
                     <SvgTopSeparator width={"100%"} height={"100%"} />
                 </TopSeparatorContainer>
                 <MainScreen
-                    name="Ditto"
-                    frontSprite="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+                    id={pokemon.id}
+                    name={pokemon.name}
+                    frontSprite={pokemon.sprites.front_default}
+                    backSprite={pokemon.sprites.back_default}
                 />
                 <Knob />
-                <TypeIndicators type1="Fire" type2="Fighting" />
+                <TypeIndicators types={pokemon.types} />
                 <InfoTextArea>
                     There is a plant seed on its back right from the day this
                     Pokémon is born. The seed slowly grows larger.
