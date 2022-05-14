@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { VarKeyMap } from "../../data/VarKeyMap";
 import SvgSwitchIcon from "../../assets/components/SwitchIcon";
+import TypeIndicators from "./../TypeIndicators/TypeIndicators";
 
 const MainScreenDisplay = styled.div`
     --h: 456px;
@@ -60,7 +61,18 @@ const MainScreenDisplay = styled.div`
     }
 `;
 
-function MainScreen({ frontSprite, backSprite, name, id }) {
+const PositionedTypeIndicators = styled(TypeIndicators)`
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+`;
+
+function MainScreen({ pokemon }) {
+    const id = pokemon.id;
+    const name = pokemon.name;
+    const frontSprite = pokemon.sprites.front_default;
+    const backSprite = pokemon.sprites.back_default;
+
     const [spriteToShow, setSpriteToShow] = useState("front");
 
     const toggleSpriteToShow = () => {
@@ -87,15 +99,13 @@ function MainScreen({ frontSprite, backSprite, name, id }) {
                     height="100%"
                 />
             </button>
+            <PositionedTypeIndicators types={pokemon.types} />
         </MainScreenDisplay>
     );
 }
 
 MainScreen.propTypes = {
-    frontSprite: PropTypes.string.isRequired,
-    backSprite: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    pokemon: PropTypes.object,
 };
 
 export default MainScreen;

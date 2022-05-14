@@ -4,7 +4,7 @@ import InfoTextArea, { InfoTextAreaProps } from "./InfoTextArea";
 import SvgDpad from "../../assets/components/Dpad";
 
 const DPadContainer = styled.div`
-    grid-column: span 2 / span 2;
+    grid-column: 1 / span 2;
     margin: 1rem 1.5rem 0.5rem 1.5rem;
 `;
 

@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { VarKeyMap } from "./data/VarKeyMap";
 import SvgTopCircle from "./assets/components/TopCircle";
 import SvgTopSeparator from "./assets/components/TopSeparator";
-import TypeIndicators from "./fragments/TypeIndicators/TypeIndicators";
 import MainScreen from "./fragments/MainScreen/MainScreen";
 import Loading from "./fragments/Loading/Loading";
 import { ditto as pokemon } from "./data/samplePokemon";
 import DpadController from "./fragments/InfoTextArea/DpadController";
 import SpeechButton from "./fragments/SpeechButton/SpeechButton";
+import ContextWrappers from "./contexts/ContextWrappers";
 
 const Section = styled.section`
     width: 100%;
@@ -44,26 +44,22 @@ const TopSeparatorContainer = styled.div`
 
 function App() {
     return (
-        <Section>
-            <Frame>
-                <TopCircleContainer>
-                    <SvgTopCircle width={"100%"} height={"100%"} />
-                </TopCircleContainer>
-                <Loading />
-                <TopSeparatorContainer>
-                    <SvgTopSeparator width={"100%"} height={"100%"} />
-                </TopSeparatorContainer>
-                <MainScreen
-                    id={pokemon.id}
-                    name={pokemon.name}
-                    frontSprite={pokemon.sprites.front_default}
-                    backSprite={pokemon.sprites.back_default}
-                />
-                <SpeechButton />
-                <TypeIndicators types={pokemon.types} />
-                <DpadController stats={pokemon.stats} />
-            </Frame>
-        </Section>
+        <ContextWrappers>
+            <Section>
+                <Frame>
+                    <TopCircleContainer>
+                        <SvgTopCircle width={"100%"} height={"100%"} />
+                    </TopCircleContainer>
+                    <Loading />
+                    <TopSeparatorContainer>
+                        <SvgTopSeparator width={"100%"} height={"100%"} />
+                    </TopSeparatorContainer>
+                    <MainScreen pokemon={pokemon} />
+                    <SpeechButton />
+                    <DpadController stats={pokemon.stats} />
+                </Frame>
+            </Section>
+        </ContextWrappers>
     );
 }
 
