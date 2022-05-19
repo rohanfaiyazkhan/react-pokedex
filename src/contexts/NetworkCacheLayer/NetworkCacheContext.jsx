@@ -39,3 +39,7 @@ export function NetworkCacheContextWrapper(props) {
 export function useNetworkCache() {
     return useContext(NetworkCacheContext);
 }
+
+export function useNetworkCacheDispatch() {
+    return useContext(NetworkCacheDispatchContext);
+}

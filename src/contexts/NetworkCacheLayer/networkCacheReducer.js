@@ -53,6 +53,7 @@ export function networkCacheReducer(state, action) {
                         ...state?.[id]?.pokemon,
                         failedOn: timestamp,
                         loadingState: LoadingStates.Fail,
+                        error: action?.payload,
                     },
                 },
             };
@@ -97,6 +98,7 @@ export function networkCacheReducer(state, action) {
                         ...state?.[id]?.species,
                         failedOn: timestamp,
                         loadingState: LoadingStates.Fail,
+                        error: action?.payload,
                     },
                 },
             };
