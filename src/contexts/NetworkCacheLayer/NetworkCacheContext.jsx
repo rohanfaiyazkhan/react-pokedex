@@ -2,22 +2,18 @@ import { createContext, useContext, useReducer } from "react";
 import { networkCacheReducer } from "./networkCacheReducer";
 
 /**
- * Should have probably used Typescript for this project but ahh well
- * Here is the type I am expecting for this context
- * {
- *      [id]: {
- *          pokemon: {
- *              resource: {...},
- *              loadingState: LoadingStates,
+ * Template of data cache. id and name are namespaces and each resource contains signalling information and the resource
+ * @typedef {{
+ *     [id: number]: {
+ *          [name: string]: {
+ *              loadingState: string,
  *              fetchedOn: number,
  *              failedOn: number,
- *              requestOn: number
- *          },
- *          species: {
- *              ...same as pokemon
+ *              requestOn: number,
+ *              resource: any
  *          }
  *      }
- * }
+ * }} ResourceContainer
  */
 
 const initialState = {};
@@ -36,6 +32,9 @@ export function NetworkCacheContextWrapper(props) {
     );
 }
 
+/**
+ * @returns {ResourceContainer}
+ */
 export function useNetworkCache() {
     return useContext(NetworkCacheContext);
 }
