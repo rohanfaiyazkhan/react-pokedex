@@ -8,29 +8,33 @@ import { getApiRoute } from "./getApiRoute";
 import { StalenessTimeoutMs } from "./NetworkConfig";
 import { LoadingStates } from "../../data/LoadingStates";
 import getCurrentTimeStamp from "../../utils/getCurrentTimeStamp";
+import makeFetchRequest from "./makeFetchRequest";
 
 /**
- *
- * @param {RequestInfo} request Fetch request parameters
- * @param {string} baseAction Base action name without success or failure, e.g. GetPokemonRequest
- * @returns {() => void} Callback that runs a fetch request
+ * @param {"pokemon" | "species"} resource Type of resource, either "pokemon" or "species"
+ * @param {number} id ID of pokemon to be fetched
  */
-export function useResourceFetchCallback(request, baseAction) {
+export function useResourceFetchCallback(resource, id) {
     const dispatch = useNetworkCacheDispatch();
+    const baseActionName =
+        resource === "pokemon"
+            ? NetworkCacheActions.GetPokemonRequest
+            : NetworkCacheActions.GetSpeciesRequest;
 
     return useCallback(() => {
         dispatch({
-            type: baseAction,
+            type: baseActionName,
         });
 
-        fetch(request)
-            .then((value) => {
-                console.log("Request successful", value);
+        makeFetchRequest(resource, id)
+            .then((value) => value.json())
+            .then((data) => {
+                console.log("Request successful", data);
 
                 dispatch({
-                    type: baseAction + "Success",
+                    type: baseActionName + "Success",
                     payload: {
-                        data: value,
+                        data,
                     },
                 });
             })
@@ -38,11 +42,11 @@ export function useResourceFetchCallback(request, baseAction) {
                 console.error("Request error: ", error);
 
                 dispatch({
-                    type: baseAction + "Failure",
+                    type: baseActionName + "Failure",
                     payload: error,
                 });
             });
-    }, [baseAction, dispatch, request]);
+    }, [baseActionName, dispatch, id, resource]);
 }
 
 /**
@@ -62,9 +66,8 @@ function assertNumberIfNotEmpty(input, name, context = "useResource") {
 }
 
 /**
- *
  * @param {"pokemon" | "species"} resource Type of resource, either "pokemon" or "species"
- * @param {number} id
+ * @param {number} id ID of pokemon to be fetched
  */
 export default function useCachedResource(
     resource,
@@ -77,13 +80,6 @@ export default function useCachedResource(
         );
     }
 
-    const baseActionName =
-        resource === "pokemon"
-            ? NetworkCacheActions.GetPokemonRequest
-            : NetworkCacheActions.GetSpeciesRequest;
-
-    const apiRoute = getApiRoute(resource, id);
-
     const state = useNetworkCache();
 
     const resourceContainer = state?.[id]?.[resource];
@@ -93,10 +89,7 @@ export default function useCachedResource(
     const loadingState = resourceContainer?.loadingState;
     const fetchedOn = resourceContainer?.fetchedOn;
     const requestOn = resourceContainer?.requestOn;
-    const resourceFetchCallback = useResourceFetchCallback(
-        apiRoute,
-        baseActionName
-    );
+    const resourceFetchCallback = useResourceFetchCallback(resource, id);
 
     assertNumberIfNotEmpty(fetchedOn, "fetchedOn");
     assertNumberIfNotEmpty(requestOn, "requestOn");
