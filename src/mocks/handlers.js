@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { getApiRoute } from "../../contexts/NetworkCacheLayer/getApiRoute";
+import { getApiRoute } from "../contexts/NetworkCacheLayer/getApiRoute";
 import { mockPokemonResponse } from "./pokemon.mock";
 import mockSpeciesResponse from "./species.mock";
 
