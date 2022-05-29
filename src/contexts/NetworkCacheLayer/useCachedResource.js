@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import {
     useNetworkCache,
     useNetworkCacheDispatch,
@@ -9,6 +9,7 @@ import { StalenessTimeoutMs } from "./NetworkConfig";
 import { LoadingStates } from "../../data/LoadingStates";
 import getCurrentTimeStamp from "../../utils/getCurrentTimeStamp";
 import makeFetchRequest from "./makeFetchRequest";
+import usePrevious from "./../../utils/hooks/usePrevious";
 
 /**
  * @param {"pokemon" | "species"} resource Type of resource, either "pokemon" or "species"
@@ -24,17 +25,21 @@ export function useResourceFetchCallback(resource, id) {
     return useCallback(() => {
         dispatch({
             type: baseActionName,
+            payload: {
+                id,
+            },
         });
 
         makeFetchRequest(resource, id)
             .then((value) => value.json())
             .then((data) => {
-                console.log("Request successful", data);
+                // console.log("Request successful", data);
 
                 dispatch({
                     type: baseActionName + "Success",
                     payload: {
                         data,
+                        id,
                     },
                 });
             })
@@ -43,7 +48,10 @@ export function useResourceFetchCallback(resource, id) {
 
                 dispatch({
                     type: baseActionName + "Failure",
-                    payload: error,
+                    payload: {
+                        error,
+                        id,
+                    },
                 });
             });
     }, [baseActionName, dispatch, id, resource]);
@@ -57,7 +65,7 @@ export function useResourceFetchCallback(resource, id) {
  * @param {string} context Name of context
  * @returns {asserts T is number | undefined}
  */
-function assertNumberIfNotEmpty(input, name, context = "useResource") {
+function assertNumberIfNotEmpty(input, name, context) {
     if (input !== undefined && typeof input !== "number") {
         throw new Error(
             `[${context}]: Unexpected type of ${name}. Expected number but found ${typeof input}`
@@ -91,16 +99,23 @@ export default function useCachedResource(
     const requestOn = resourceContainer?.requestOn;
     const resourceFetchCallback = useResourceFetchCallback(resource, id);
 
-    assertNumberIfNotEmpty(fetchedOn, "fetchedOn");
-    assertNumberIfNotEmpty(requestOn, "requestOn");
+    assertNumberIfNotEmpty(fetchedOn, "fetchedOn", "useCachedResource");
+    assertNumberIfNotEmpty(requestOn, "requestOn", "useCachedResource");
+
+    const attemptRef = useRef(0);
+    const previousId = usePrevious(id);
+
+    const attemptUnblocked = attemptRef.current === 0 || id !== previousId;
 
     useEffect(() => {
         if (
             isResourceEmpty &&
             loadingState !== LoadingStates.Loading &&
-            requestOn === undefined
+            requestOn === undefined &&
+            attemptUnblocked
         ) {
             resourceFetchCallback();
+            attemptRef.current += 1;
             return;
         }
 
@@ -108,11 +123,17 @@ export default function useCachedResource(
         const isCacheStale =
             currentTime - Math.max([requestOn, fetchedOn]) > cacheDuration;
 
-        if (loadingState !== LoadingStates.Loading && isCacheStale) {
+        if (
+            loadingState !== LoadingStates.Loading &&
+            isCacheStale &&
+            attemptUnblocked
+        ) {
             resourceFetchCallback();
+            attemptRef.current += 1;
             return;
         }
     }, [
+        attemptUnblocked,
         cacheDuration,
         fetchedOn,
         isResourceEmpty,

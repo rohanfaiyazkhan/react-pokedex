@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const SvgDpad = (props) => (
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg fill="none" viewBox="0 0 80 85" {...props}>
         <g filter="url(#dpad_svg__a)" fill="#643B3B">
             <path d="M0 28a2 2 0 0 1 2-2h73a2 2 0 0 1 2 2v22a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V28Z" />
             <path d="M26 2a2 2 0 0 1 2-2h22a2 2 0 0 1 2 2v74a2 2 0 0 1-2 2H28a2 2 0 0 1-2-2V2Z" />

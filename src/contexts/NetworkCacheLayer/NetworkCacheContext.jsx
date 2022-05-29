@@ -2,16 +2,21 @@ import { createContext, useContext, useReducer } from "react";
 import { networkCacheReducer } from "./networkCacheReducer";
 
 /**
+ *
+ * @typedef {{
+ *  loadingState: string,
+ *  fetchedOn: number,
+ *  failedOn: number,
+ *  requestOn: number,
+ *  resource: any
+ * }} ResourceContent
+ *
+ *
  * Template of data cache. id and name are namespaces and each resource contains signalling information and the resource
  * @typedef {{
  *     [id: number]: {
- *          [name: string]: {
- *              loadingState: string,
- *              fetchedOn: number,
- *              failedOn: number,
- *              requestOn: number,
- *              resource: any
- *          }
+ *          pokemon: ResourceContent,
+ *          species: ResourceContent
  *      }
  * }} ResourceContainer
  */

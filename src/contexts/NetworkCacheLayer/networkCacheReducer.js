@@ -3,7 +3,9 @@ import getCurrentTimeStamp from "./../../utils/getCurrentTimeStamp";
 import { LoadingStates } from "./../../data/LoadingStates";
 
 export function networkCacheReducer(state, action) {
-    let id = action.payload.id;
+    console.debug("[networkCacheReducer -> action recieved]: ", action);
+
+    let id = action?.payload?.id;
 
     if (!id) {
         throw new Error("[networkCacheReducer]: id is unknown");
@@ -53,7 +55,7 @@ export function networkCacheReducer(state, action) {
                         ...state?.[id]?.pokemon,
                         failedOn: timestamp,
                         loadingState: LoadingStates.Fail,
-                        error: action?.payload,
+                        error: action?.payload?.error,
                     },
                 },
             };
@@ -98,7 +100,7 @@ export function networkCacheReducer(state, action) {
                         ...state?.[id]?.species,
                         failedOn: timestamp,
                         loadingState: LoadingStates.Fail,
-                        error: action?.payload,
+                        error: action?.payload?.error,
                     },
                 },
             };
