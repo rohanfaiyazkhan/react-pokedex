@@ -31,19 +31,19 @@ const Button = styled.button`
 `;
 
 const RightButton = styled(Button)`
-    --w: 2.2em;
-    --h: 2.5em;
-    --r: 1px;
-    --t: calc(50% - 1.5em);
+    --w: 32%;
+    --h: 34%;
+    --r: 1%;
+    --t: calc(50% - var(--h) / 2);
     --l: auto;
 `;
 
 const LeftButton = styled(Button)`
-    --w: 2.2em;
-    --h: 2.5em;
+    --w: 32%;
+    --h: 34%;
     --r: auto;
-    --l: 1px;
-    --t: calc(50% - 1.5em);
+    --l: 1%;
+    --t: calc(50% - var(--h) / 2);
 `;
 
 function DpadController({ stats, rightHandler, leftHandler }) {

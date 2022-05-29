@@ -10,6 +10,6 @@
     --light-1: hsla(0, 0, 87%, 1);
     --light-2: hsla(130, 18%, 80%, 1);
     --dark-1: hsla(0, 51%, 31%, 1);
-    --pokedex-width: 428px;
+    --pokedex-width: min(100vw, 428px);
     --pokedex-height: 926px;
 }

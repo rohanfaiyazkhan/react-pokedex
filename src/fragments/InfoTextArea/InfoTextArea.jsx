@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { VarKeyMap } from "../../data/VarKeyMap";
-import { StatNames } from "./StatNames";
+import Stats from "../Stats";
 
 const InfoBox = styled.div`
     --scroll-track: var(${VarKeyMap.Gray900});
@@ -28,7 +28,11 @@ const InfoBox = styled.div`
 `;
 
 function InfoTextArea({ stats }) {
-    return <InfoBox></InfoBox>;
+    return (
+        <InfoBox>
+            <Stats stats={stats} />
+        </InfoBox>
+    );
 }
 
 export const InfoTextAreaProps = {

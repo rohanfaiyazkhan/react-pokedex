@@ -7,10 +7,26 @@ import Loading from "../fragments/Loading/Loading";
 import { ditto as pokemon } from "../data/samplePokemon";
 import DpadController from "../fragments/InfoTextArea/DpadController";
 import SpeechButton from "../fragments/SpeechButton/SpeechButton";
-import { useNetworkCache } from "../contexts/NetworkCacheLayer/NetworkCacheContext";
-import { useState } from "react";
 import usePokemonId from "./../utils/hooks/usePokemonId";
 import useCachedResource from "../contexts/NetworkCacheLayer/useCachedResource";
+import backgroundImg from "../assets/background.jpg";
+
+const HiddenOverlay = styled.div`
+    display: none;
+
+    @media (min-width: 428px) {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: var(--light-2);
+        left: 0;
+        top: 0;
+        z-index: 0;
+        opacity: 0.8;
+        filter: blur(8px);
+    }
+`;
 
 const Section = styled.section`
     width: 100%;
@@ -18,9 +34,14 @@ const Section = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url(${backgroundImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 `;
 
 const Container = styled.main`
+    z-index: 1;
     background-color: var(${VarKeyMap.Red});
     width: min(100vw, var(${VarKeyMap.PokedexWidth}));
     height: var(${VarKeyMap.PokedexHeight});
@@ -48,10 +69,12 @@ const TopSeparatorContainer = styled.div`
 function Frame(props) {
     const [id, incrementId, decrementId] = usePokemonId();
 
-    useCachedResource("pokemon", id);
+    const pokemonResource = useCachedResource("pokemon", id);
+    const speciesResource = useCachedResource("species", id);
 
     return (
         <Section>
+            <HiddenOverlay />
             <Container>
                 <TopCircleContainer>
                     <SvgTopCircle width={"100%"} height={"100%"} />
@@ -60,10 +83,10 @@ function Frame(props) {
                 <TopSeparatorContainer>
                     <SvgTopSeparator width={"100%"} height={"100%"} />
                 </TopSeparatorContainer>
-                <MainScreen pokemon={pokemon} />
+                <MainScreen pokemon={pokemonResource?.resource} />
                 <SpeechButton />
                 <DpadController
-                    stats={pokemon.stats}
+                    stats={pokemonResource?.resource?.stats}
                     rightHandler={incrementId}
                     leftHandler={decrementId}
                 />
